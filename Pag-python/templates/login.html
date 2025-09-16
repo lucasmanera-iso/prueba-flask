@@ -4,6 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <link rel="stylesheet" href="/static/styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+
 </head>
 <body>
     
@@ -15,9 +18,16 @@
 
     <main>
 
-        <form action="" method="post">
-            <input type="text" placeholder="Nombre">
-            <input type="email" placeholder="Email">
+        {% if mensaje %}
+        <p>{{ mensaje }}</p>
+        {% endif %}
+
+        <form action="" method="post" class="form-insert">
+            <h2>Iniciar Sesion</h2>
+            <label for="Nombre">Ingrese Su nombre</label>
+            <input type="text" name="Nombre" placeholder="Nombre">
+            <label for="password">Ingrese su Contraseña</label>
+            <input type="password" name="password" placeholder="Contraseña">
             <button type="submit">Logear</button>
         </form>
     </main>
