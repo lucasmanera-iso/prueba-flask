@@ -1,0 +1,87 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
+  margin: 0px;
+  padding: 0px;
+}
+
+.header-container{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    background-color: #7b2cbf;
+    padding: 10px;
+}
+
+.form-insert {
+    display: flex;
+    flex-direction: column;
+    margin: 10% 30% 10% 30%;
+    background-color: rgba(176, 116, 255, 0.692);
+    border-radius: 10px;
+    padding: 2rem; /* un poco de respiro adentro */
+    box-shadow: 0px 4px 15px rgba(0,0,0,0.2);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+/* efecto al pasar por encima del contenedor */
+.form-insert:hover {
+    transform: translateY(-3px);
+    box-shadow: 0px 8px 20px rgba(0,0,0,0.3);
+}
+
+.form-insert > h2 {
+    text-align: center;
+    margin-bottom: 1rem;
+    color: #242424;
+
+}
+
+.form-insert > label {
+    margin: 0% 30% 0% 30%;
+    font-size: small;
+    font-weight: 600;
+    color:  #242424;
+}
+
+.form-insert > input {
+    margin: 0% 30% 5% 30%;
+    padding: 0.7rem;
+    border: none;
+    border-radius: 5px;
+    transition: all 0.3s ease;
+}
+
+/* Efecto al hacer focus en los inputs */
+.form-insert > input:focus {
+    outline: none;
+    border: 2px solid #9d4edd;
+    box-shadow: 0 0 8px #c77dff;
+}
+
+/* Botón */
+.form-insert > button {
+    margin: 0% 40% 5% 40%;
+    padding: 0.8rem;
+    border: none;
+    border-radius: 10px;
+    background: linear-gradient(135deg, #9d4edd, #7b2cbf);
+    color:  #242424;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+/* Hover del botón */
+.form-insert > button:hover {
+    background: linear-gradient(135deg, #7b2cbf, #5a189a);
+    transform: scale(1.05);
+    box-shadow: 0px 4px 12px rgba(0,0,0,0.4);
+}
+
+/* Al hacer click */
+.form-insert > button:active {
+    transform: scale(0.97);
+}
