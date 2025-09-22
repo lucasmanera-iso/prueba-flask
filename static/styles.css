@@ -12,8 +12,83 @@
     flex-direction: row;
     justify-content: space-between;
     background-color: #7b2cbf;
-    padding: 10px;
+    padding: 0px 10px 0px 10px;
 }
+
+
+.header-container{
+display: flex;
+flex-direction: row;
+
+}
+.search-container{
+display: flex;
+align-items: center;
+}
+
+
+.logo-header img{
+width: 100px;
+height: 100px;
+}
+
+.search{
+margin-left: 10px;
+}
+.search input{
+    border: none;
+    border-radius: 40px;
+    padding: 10%;
+}
+
+.menu-container{
+display: flex;
+justify-content: space-between;
+align-items: center;
+}
+.menu-container>*{
+    margin: 5px;
+}
+
+
+
+a {
+  color: black;           /* Color negro */
+  text-decoration: none;  /* Quita el subrayado */
+  transition: color 0.3s ease; /* Transición suave para hover */
+  font-weight: 400;
+}
+
+/* Hover */
+a:hover {
+  color: #007BFF; /* Cambia a azul al pasar el mouse */
+}
+
+/* Click / activo */
+a:active {
+  color: #0056b3; /* Azul más oscuro al hacer click */
+}
+
+/* Visitado (opcional) */
+a:visited {
+  color: black;  /* Mantener negro después de visitar */
+}
+
+
+
+.profile-logo img{
+    width: 50px;
+    height: 50px;
+}
+
+
+
+
+
+
+
+
+
 
 .form-insert {
     display: flex;
@@ -84,4 +159,37 @@
 /* Al hacer click */
 .form-insert > button:active {
     transform: scale(0.97);
+}
+
+
+.grid-container{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+}
+
+.card-container{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.admins-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 16px;
+  margin-top: 20px;
+}
+.admin-card {
+  border: 1px solid #ccc;
+  padding: 16px;
+  border-radius: 8px;
+  background: #f9f9f9;
+}
+.admin-card h3 {
+  margin: 0 0 8px;
+}
+.admin-card a {
+  margin-right: 10px;
+  text-decoration: none;
+  color: blue;
 }

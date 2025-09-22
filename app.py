@@ -142,7 +142,7 @@ def editar_admin(id):
     if conn:
         try:
             with conn.cursor() as cursor:
-                cursor.execute("SELECT * FROM usuario_admin WHERE id=%s", (id,))
+                cursor.execute("SELECT * FROM usuario_admin WHERE id_usuario=%s", (id,))
                 admin = cursor.fetchone()
         except pymysql.MySQLError as err:
             print(f"❌ Error en MySQL: {err}")
@@ -151,15 +151,30 @@ def editar_admin(id):
 
     return render_template("editar.html", admin=admin)
 
+@app.route("/productos")
+def catalogo():
+    conn = get_connection()
+    productos = []
+    if conn:
+        try:
+            with conn.cursor() as cursor:
+                cursor.execute("SELECT * FROM productos")
+                productos = cursor.fetchall()
+        except pymysql.MySQLError as err:
+            print(f"Error en MySQL: {err}")
+        finally:
+            conn.close()
+    return render_template("productos.html", productos=productos)
 
 
 
 # Home (si está logueado)
 @app.route("/")
 def logueado():
+    
 
 
-    return render_template("index.html")
+    return render_template("index.html", usuarios=usuarios)
 
 
 if __name__ == "__main__":
