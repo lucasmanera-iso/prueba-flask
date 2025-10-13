@@ -14,15 +14,15 @@
         <div class="header-container">
             <div class="search-container">
                 <div class="logo-header">
-                    <a href="/"><img src="https://imgs.search.brave.com/RqUkHezMgKm9_q09CbgnTaqoVVlXfgfac8dTJG1UBDo/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9pbWFn/ZXMuc2Vla2xvZ28u/Y29tL2xvZ28tcG5n/LzIyLzIvc2ctcGVs/dXF1ZXJpYS1sb2dv/LXBuZ19zZWVrbG9n/by0yMjU4NDgucG5n" alt=""></a>
+                    <a href="/"><img src="/static/Image/file_00000000724861f5921807b71963460f.png" alt=""></a>
                 </div>
                 <div class="search">
                     <input type="text" placeholder="Buscar Productos">
                 </div>
             </div>
             <div class="menu-container">
-                <div><a href="/productos">Productos</a></div>
-                <div><a href="/contactos">Contacto</a></div>
+                <div><a href="/productos" >Productos</a></div>
+                <div><a href="/contactos" >Contacto</a></div>
                 <div class="profile-logo"><a href="/administradores"><img src="https://imgs.search.brave.com/FOrjj-LAZECzR2vyFNpfW6DE4UrfNIdP43418R-_RiA/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9pbWFn/ZXMuc2Vla2xvZ28u/Y29tL2xvZ28tcG5n/LzI3LzIvdXNlci1s/aW5lLWxvZ28tcG5n/X3NlZWtsb2dvLTI3/MjU4MS5wbmc" alt=""></a></div>
             </div>
         </div>
@@ -31,16 +31,27 @@
 
     <main>
 
-        <div class="grid-container">
-            {% for producto in productos %}
-            <div class="card-container">
-                <div class="card-title">{{ producto.nombre }}</div>
-                <div class="card-img"><img src="https://imgs.search.brave.com/T3zMBFyG2HqFdbIDewjoZU8qTxeAGw8kLJ_Zzb89u9A/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9jZG4x/MS5iaWdjb21tZXJj/ZS5jb20vcy1mdHNm/bG5zZTRvL2ltYWdl/cy9zdGVuY2lsLzU5/MHg1OTAvcHJvZHVj/dHMvMTgwNDgvNjk0/NTAvRF84NTQ3MjYt/TUxBNzc4MTQyODk1/NDVfMDcyMDI0LU9f/XzI2OTczLjE3MzA2/OTQ5MjYuanBnP2M9/MQ" width="300px" height="300px" alt=""></div>
-                <div class="card-price">${{ producto.precio }}</div>
-                <div class="card-desc">{{ producto.descripcion }}</div>
+            <div class="grid-container">
+                {% for producto in productos %}
+                <div class="card-container">
+                    <div class="card-title">{{ producto.nombre }}</div>
+                    <div class="card-img">
+                        <img src="{{ producto.imagen }}" width="300px" height="300px" alt="">
+                    </div>
+                    <div class="card-price">${{ producto.precio }}</div>
+                    <div class="card-desc">{{ producto.descripcion }}</div>
+
+                    {% if usuarios %}
+                        <!-- Esto solo se muestra si hay usuario logueado -->
+                        <div>
+                            <a href="{{ url_for('editar_producto', id=producto.id_producto) }}">Editar</a> |
+                            <a href="">Eliminar</a>
+                        </div>
+                    {% endif %}
+                </div>
+                {% endfor %}
             </div>
-            {% endfor %}
-        </div>
+
 
 
     </main>

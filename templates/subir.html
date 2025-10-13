@@ -6,10 +6,8 @@
     <title>Document</title>
     <link rel="stylesheet" href="/static/styles.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
-
 </head>
 <body>
-
     <header>
         <div class="header-container">
             <div class="search-container">
@@ -28,16 +26,30 @@
         </div>
     </header>
 
-
     <main>
-        <div class="products-grid">
-            <div>
-                
-            </div>
-        </div>
+            <form action="/subir" method="POST" enctype="multipart/form-data" class="form-insert">
+            <h2>Subir Producto</h2>
+            <label for="name">Ingrese el nombre del producto</label>
+            <input type="text" name="nombre" placeholder="Shampo SuperLimpio 375ml">
+            <label for="marca">Marca del producto</label>
+            <input type="text" name="marca" placeholder="Coalix">
+            <label for="descripcion">Ingrese Descripcion del producto</label>
+            <input type="text" name="descripcion" placeholder="Shampo ideal para cabellos rizos">
+            <label for="precio">Precio</label>
+            <input type="text" name="precio" placeholder="5000">
+            <label for="contenido">contenido</label>
+            <input type="text" name="contenido" placeholder="375ml">
+            <label for="stock">Stock</label>
+            <input type="text" name="stock" placeholder="1 o 0">
+            <label for="imagen">Subir una imagen del producto</label>
+            <input type="file" name="imagen" accept="image/*">
+            <label for="categoria">Seleccione categoria</label>
+            <input type="text" name="categoria">
+
+            <button type="submit">Subir</button>
+        </form>
+
     </main>
-
-
     <footer>
 
     </footer>

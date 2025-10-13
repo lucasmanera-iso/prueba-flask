@@ -25,20 +25,23 @@
             </div>
         </div>
     </header>
-    <h1>Administradores</h1>
-<div class="admins-container">
-  {% for admin in administradores %}
-    <div class="admin-card">
-      <h3>{{ admin.nombre }} {{ admin.apellido }}</h3>
-      <p>Email: {{ admin.email }}</p>
-      <p>Teléfono: {{ admin.telefono }}</p>
-      <p>Contraseña: {{admin.psw}}</p>
-      <a href="{{ url_for('editar_admin', id=admin.id_usuario) }}">✏️ Editar</a>
-    </div>
-  {% endfor %}
-</div>
+    <h1>Editar administrador</h1>
+<form method="POST">
+  <label>Nombre:</label>
+  <input type="text" name="Nombre" value="{{ usuario.nombre }}"><br>
 
+  <label>Apellido:</label>
+  <input type="text" name="Apellido" value="{{ usuario.apellido }}"><br>
 
+  <label>Teléfono:</label>
+  <input type="text" name="Telefono" value="{{ usuario.telefono }}"><br>
 
+  <label>Email:</label>
+  <input type="email" name="Email" value="{{ usuario.email }}"><br>
+
+  <button type="submit">Guardar cambios</button>
+</form>
+
+    
 </body>
 </html>

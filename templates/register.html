@@ -8,6 +8,24 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
 </head>
 <body>
+    <header>
+        <div class="header-container">
+            <div class="search-container">
+                <div class="logo-header">
+                    <a href="/"><img src="/static/Image/file_00000000724861f5921807b71963460f.png" alt=""></a>
+                </div>
+                <div class="search">
+                    <input type="text" placeholder="Buscar Productos">
+                </div>
+            </div>
+            <div class="menu-container">
+                <div><a href="/productos" >Productos</a></div>
+                <div><a href="/contactos" >Contacto</a></div>
+                <div class="profile-logo"><a href="/administradores"><img src="https://imgs.search.brave.com/FOrjj-LAZECzR2vyFNpfW6DE4UrfNIdP43418R-_RiA/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9pbWFn/ZXMuc2Vla2xvZ28u/Y29tL2xvZ28tcG5n/LzI3LzIvdXNlci1s/aW5lLWxvZ28tcG5n/X3NlZWtsb2dvLTI3/MjU4MS5wbmc" alt=""></a></div>
+            </div>
+        </div>
+    </header>
+
 
     {% if mensaje %}
         <p>{{ mensaje }}</p>
