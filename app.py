@@ -290,11 +290,32 @@ def subir():
 
 # Home (si está logueado)
 @app.route("/")
-def logueado():
-    
+def index():
+    conn = get_connection()
+    cursor = conn.cursor()
 
+    # 1️⃣ Novedades: los últimos agregados
+    cursor.execute("SELECT * FROM productos ORDER BY id_producto DESC LIMIT 8")
+    novedades = cursor.fetchall()
 
-    return render_template("index.html")
+    # 2️⃣ Más vendidos (usamos stock por ahora)
+    cursor.execute("SELECT * FROM productos ORDER BY stock DESC LIMIT 8")
+    mas_vendidos = cursor.fetchall()
+
+    # 3️⃣ Shampo (Traemos el todos losproductos que tengan la categoria shampoo)
+    cursor.execute("SELECT * FROM productos WHERE id_categoria = 1 LIMIT 8")
+    shampoo = cursor.fetchall()
+
+    conn.close()
+
+    # 🔙 Enviamos todo a index.html
+    return render_template(
+        "index.html",
+        novedades=novedades,
+        mas_vendidos=mas_vendidos,
+        shampoo=shampoo
+    )
+
 
 
 if __name__ == "__main__":
