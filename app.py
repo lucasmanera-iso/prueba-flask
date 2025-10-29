@@ -306,7 +306,11 @@ def index():
     mas_vendidos = cursor.fetchall()
 
     # 3️⃣ Shampo (Traemos el todos losproductos que tengan la categoria shampoo)
+<<<<<<< HEAD
     cursor.execute("SELECT * FROM productos WHERE id_categoria = 4 LIMIT 8")
+=======
+    cursor.execute("SELECT * FROM productos WHERE id_categoria = 2 LIMIT 8")
+>>>>>>> 21b424899dc153010ad2af328ceedd6f26563c1a
     shampoo = cursor.fetchall()
 
     conn.close()

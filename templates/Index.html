@@ -41,17 +41,42 @@
 
 
     <main>
-        <div class="carrusel" id="carrusel-novedades"></div>
-        <div class="carrusel" id="carrusel-mas-vendidos"></div>
-        <div class="carrusel" id="carrusel-shampoo"></div>
+
+  <div>
+    <h2>Novedades</h2>
+    <div class="carrusel" id="carrusel-novedades">
+      <button class="restar">-</button>
+      <div class="producto"></div>
+      <button class="sumar">+</button>
+    </div>
+
+    <h2>Más vendidos</h2>
+    <div class="carrusel" id="carrusel-mas-vendidos">
+      <button class="restar">-</button>
+      <div class="producto"></div>
+      <button class="sumar">+</button>
+    </div>
+
+    <h2>Shampoos</h2>
+    <div class="carrusel" id="carrusel-shampoo">
+      <button class="restar">-</button>
+      <div class="producto"></div>
+      <button class="sumar">+</button>
+    </div>
+  </div>
+
+
+
+        
 
 
         <div id="data"
-     data-novedades='{{ novedades|tojson|safe }}'
-     data-masvendidos='{{ mas_vendidos|tojson|safe }}'
-     data-shampoo='{{ shampoo|tojson|safe }}'>
-</div>
+            data-novedades='{{ novedades|tojson|safe }}'
+            data-masvendidos='{{ mas_vendidos|tojson|safe }}'
+            data-shampoo='{{ shampoo|tojson|safe }}'>
+        </div>
 
+<<<<<<< HEAD
 <script>
   const data = document.getElementById("data");
   const novedades = JSON.parse(data.dataset.novedades);
@@ -82,6 +107,8 @@ renderProductos(novedades, "carrusel-novedades");
 renderProductos(masVendidos, "carrusel-mas-vendidos");
 renderProductos(shampoo, "carrusel-shampoo");
 </script>
+=======
+>>>>>>> 21b424899dc153010ad2af328ceedd6f26563c1a
 
     </main>
     
@@ -89,6 +116,7 @@ renderProductos(shampoo, "carrusel-shampoo");
     <footer>
 
     </footer>
+        <script src="{{ url_for('static', filename='js/script.js') }}"></script>
 </body>
 <script src="/static/Js/menu_desplegable.js"></script>
 </html>
