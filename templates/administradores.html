@@ -20,25 +20,37 @@
             </div>
             <div class="menu-container">
                 <div><a href="/productos" >Productos</a></div>
-                <div><a href="/contactos" >Contacto</a></div>
+                <div><a href="https://wa.link/85v4ds" >Contacto</a></div>
                 <div class="profile-logo"><a href="/administradores"><img src="https://imgs.search.brave.com/FOrjj-LAZECzR2vyFNpfW6DE4UrfNIdP43418R-_RiA/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9pbWFn/ZXMuc2Vla2xvZ28u/Y29tL2xvZ28tcG5n/LzI3LzIvdXNlci1s/aW5lLWxvZ28tcG5n/X3NlZWtsb2dvLTI3/MjU4MS5wbmc" alt=""></a></div>
             </div>
         </div>
     </header>
-    <h1>Administradores</h1>
-<div class="admins-container">
-  {% for admin in administradores %}
-    <div class="admin-card">
-      <h3>{{ admin.nombre }} {{ admin.apellido }}</h3>
-      <p>Email: {{ admin.email }}</p>
-      <p>Teléfono: {{ admin.telefono }}</p>
-      <p>Contraseña: {{admin.psw}}</p>
-      <a href="{{ url_for('editar_admin', id=admin.id_usuario) }}">✏️ Editar</a>
-    </div>
-  {% endfor %}
-</div>
 
 
+    <main>
+      <h1>Administradores</h1>
+        <div class="admins-container">
+          {% for admin in administradores %}
+            <div class="admin-card">
+              <h3>{{ admin.nombre }} {{ admin.apellido }}</h3>
+              <p>Email: {{ admin.email }}</p>
+              <p>Teléfono: {{ admin.telefono }}</p>
+              <p>Contraseña: {{admin.psw}}</p>
+              <a href="{{ url_for('editar_admin', id=admin.id_usuario) }}">✏️ Editar</a>
+            </div>
+          {% endfor %}
+        </div>
+    </main>
+    
+
+    <footer>
+      <div class="footer-container">
+        <div>
+          
+        </div>
+
+      </div>
+    </footer>
 
 </body>
 </html>

@@ -84,7 +84,7 @@ def logear():
                     user = cursor.fetchone()
                 if user:
                     usuarios.append(user)
-                    return redirect(url_for("logueado"))
+                    return redirect("/administradores")
                 else:
                     mensaje = "❌ Usuario o contraseña incorrectos."
             except pymysql.MySQLError as err:
@@ -162,6 +162,7 @@ def editar_admin(id):
 
     return render_template("editara.html", usuario=usuario)
 
+
 @app.route("/editarp/<int:id>", methods=["GET", "POST"])
 def editar_producto(id):
     if not usuarios:
@@ -188,10 +189,10 @@ def editar_producto(id):
                         # Si hay nueva imagen
                         query = """
                             UPDATE productos
-                            SET descripcion=%s, precio=%s, contenido=%s, stock=%s, imagen=%s
+                            SET descripcion=%s, precio=%s, stock=%s, imagen=%s
                             WHERE id_producto=%s
                         """
-                        cursor.execute(query, (descripcion, precio, contenido, stock, imagen_url, id))
+                        cursor.execute(query, (descripcion, precio, stock, imagen_url, id))
                         conn.commit()
 
                         return redirect("/productos")
@@ -211,7 +212,7 @@ def editar_producto(id):
             finally:
                 conn.close()
 
-        return redirect("productos.html")
+        return redirect("/productos")
 
     # si es GET → mostrar datos actuales
     if conn:
@@ -227,6 +228,7 @@ def editar_producto(id):
 
     return render_template("editarp.html", producto=producto)
 
+
 @app.route("/productos")
 def catalogo():
     conn = get_connection()
@@ -241,6 +243,7 @@ def catalogo():
         finally:
             conn.close()
     return render_template("productos.html", productos=productos, usuarios=usuarios)
+
 
 @app.route("/subir", methods=["GET", "POST"])
 def subir():
@@ -303,7 +306,7 @@ def index():
     mas_vendidos = cursor.fetchall()
 
     # 3️⃣ Shampo (Traemos el todos losproductos que tengan la categoria shampoo)
-    cursor.execute("SELECT * FROM productos WHERE id_categoria = 1 LIMIT 8")
+    cursor.execute("SELECT * FROM productos WHERE id_categoria = 4 LIMIT 8")
     shampoo = cursor.fetchall()
 
     conn.close()
@@ -313,8 +316,10 @@ def index():
         "index.html",
         novedades=novedades,
         mas_vendidos=mas_vendidos,
-        shampoo=shampoo
+        shampoo=shampoo,
+        usuarios=usuarios
     )
+
 
 
 
