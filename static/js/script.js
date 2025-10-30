@@ -3,7 +3,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const novedades = JSON.parse(data.dataset.novedades);
   const masVendidos = JSON.parse(data.dataset.masvendidos);
   const shampoo = JSON.parse(data.dataset.shampoo);
-
+  
   function renderProductos(lista, containerId) {
     const container = document.getElementById(containerId);
     const productoDiv = container.querySelector(".producto");
