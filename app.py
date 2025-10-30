@@ -229,6 +229,23 @@ def editar_producto(id):
     return render_template("editarp.html", producto=producto)
 
 
+@app.route("/eliminarp/<int:id>", methods=["POST"])
+def eliminar_producto(id):
+    if not usuarios:
+        return redirect(url_for("logear"))
+    
+    conn = get_connection()
+    cursor = conn.cursor()
+
+    cursor.execute("DELETE FROM productos WHERE id_producto = %s", (id,))
+    conn.commit()
+    cursor.close()
+    conn.close()
+
+    return redirect(url_for("catalogo"))  # Cambia la ruta según la tuya
+
+
+
 @app.route("/productos")
 def catalogo():
     conn = get_connection()
@@ -306,11 +323,9 @@ def index():
     mas_vendidos = cursor.fetchall()
 
     # 3️⃣ Shampo (Traemos el todos losproductos que tengan la categoria shampoo)
-<<<<<<< HEAD
-    cursor.execute("SELECT * FROM productos WHERE id_categoria = 4 LIMIT 8")
-=======
-    cursor.execute("SELECT * FROM productos WHERE id_categoria = 2 LIMIT 8")
->>>>>>> 21b424899dc153010ad2af328ceedd6f26563c1a
+
+    cursor.execute("SELECT * FROM productos WHERE id_categoria = 1 LIMIT 8")
+
     shampoo = cursor.fetchall()
 
     conn.close()
