@@ -299,7 +299,7 @@ def subir():
                 return redirect(url_for("catalogo"))
 
             except Exception as e:
-                app.logger.exception("Error subiendo producto")
+                app.logger.exception("Error subiendo producto!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
                 flash(f"❌ Error: {e}")
                 return redirect(request.url)
 

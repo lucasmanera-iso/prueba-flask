@@ -11,7 +11,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const restar = container.querySelector(".restar");
 
     let contador = 0;
-    const visible = 3; // cuántos productos mostrar a la vez
+    const visible = 5; // cuántos productos mostrar a la vez
 
     function mostrarProductos(index) {
       productoDiv.innerHTML = ""; // limpiamos el contenedor
@@ -28,7 +28,6 @@ document.addEventListener("DOMContentLoaded", () => {
           <img class="card-img" src="${producto.imagen}" width="150">
           <p class="card-price">$${producto.precio}</p>
         `;
-        productoDiv.classList.add("grid-container")
         productoDiv.appendChild(card);
       }
     }

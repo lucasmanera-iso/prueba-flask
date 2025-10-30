@@ -1,6 +1,4 @@
-*,
-*::before,
-*::after {
+* {
   box-sizing: border-box;
   font-family: 'Poppins', sans-serif;
   margin: 0px;
@@ -25,6 +23,7 @@
     justify-content: space-between;
     padding: 0px 10px 0px 10px;
     background-color: #2a2c31;
+    max-width: 100%;
 }
 
 
@@ -281,4 +280,26 @@ a:active {
   scroll-snap-type: x mandatory;
 }
 
+.sumar{
+    padding: 30px;
+    background:linear-gradient(#dfba6996,#2a2c3196);
+    border-radius: 5px;
+    border: none;
+}
+.restar{
+    padding: 30px;
+    background:linear-gradient(#dfba6996,#2a2c3196);
+    border-radius: 5px;
+    border: none;
+}
 
+
+.carrusel{
+    display: flex;
+    max-width: 100%;
+    justify-content:space-around ;
+}
+
+.producto{
+    display: flex;
+}
