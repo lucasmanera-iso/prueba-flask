@@ -43,8 +43,14 @@
             <input type="text" name="stock" placeholder="1 o 0">
             <label for="imagen">Subir una imagen del producto</label>
             <input type="file" name="imagen" accept="image/*">
-            <label for="categoria">Seleccione categoria</label>
-            <input type="text" name="categoria">
+            <label for="categoria">Categoría:</label>
+            <select id="categoria" name="categoria" required>
+                <option value="1">Shampo</option>
+                <option value="2">Acondicionador</option>
+                <option value="3">Tijeras</option>
+                <option value="4">Maquinas</option>
+            </select>
+
 
             <button type="submit">Subir</button>
         </form>

@@ -45,7 +45,10 @@
                         <!-- Esto solo se muestra si hay usuario logueado -->
                         <div>
                             <a href="{{ url_for('editar_producto', id=producto.id_producto) }}">Editar</a> |
-                            <a href="">Eliminar</a>
+                            <form action="/eliminarp/{{ producto.id_producto }}" method="POST" style="display:inline;">
+                            <button type="submit">Eliminar</button>
+                            </form>
+
                         </div>
                     {% endif %}
                 </div>
