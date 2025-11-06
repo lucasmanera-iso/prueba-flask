@@ -1,5 +1,6 @@
 from flask import Flask, render_template, request, redirect, url_for, flash
 import os
+from pymysql.cursors import DictCursor
 from dotenv import load_dotenv
 import cloudinary
 import cloudinary.uploader
@@ -341,7 +342,23 @@ def index():
         usuarios=usuarios
     )
 
-
+@app.route('/search')
+def search():
+    q = request.args.get('q', '').strip()
+    results = []
+    if q:
+        like = f"%{q}%"
+        conn = get_connection()
+        try:
+            with conn.cursor() as cur:                  
+                cur.execute("SELECT * FROM productos WHERE nombre LIKE %s", (like,))
+                results = cur.fetchall()
+        except pymysql.MySQLError as err:
+            app.logger.exception("Error en búsqueda")
+            results = []
+        finally:
+            conn.close()
+    return render_template('search_results.html', q=q, resultados=results)
 
 
 if __name__ == "__main__":

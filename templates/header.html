@@ -1,0 +1,30 @@
+    <header>
+        <div class="header-container">
+            <div class="search-container">
+                <div class="logo-header">
+                    <a href="/"><img src="/static/Image/file_00000000724861f5921807b71963460f.png" alt=""></a>
+                </div>
+                <div class="search">
+                    <form action="{{ url_for('search') }}" method="get" role="search">
+                    <input type="search" name="q" placeholder="Buscar por nombre" value="{{ request.args.get('q','') }}">
+                    </form>
+                </div>
+            </div>
+            <div class="menu-container">
+                <div><a href="/productos" >Productos</a></div>
+                <div><a href="https://wa.link/85v4ds" >Contacto</a></div>
+                {% if usuarios %}
+                <div id="profile-logo" class="profile-logo">
+                    <img src="https://imgs.search.brave.com/FOrjj-LAZECzR2vyFNpfW6DE4UrfNIdP43418R-_RiA/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9pbWFn/ZXMuc2Vla2xvZ28u/Y29tL2xvZ28tcG5n/LzI3LzIvdXNlci1s/aW5lLWxvZ28tcG5n/X3NlZWtsb2dvLTI3/MjU4MS5wbmc" alt="">
+                    <div id="menu-desplegable" class="menu-desplegable">
+                        <a href="/administradores">Perfil</a>
+                        <a href="/subir">Subir productos</a>
+                    </div>
+                </div>
+                {% else %}
+                <div><a href="/login">Ingresar</a></div>
+                {% endif %}
+
+            </div>
+        </div>
+    </header>

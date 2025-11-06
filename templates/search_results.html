@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% block content %}
+    <h2>Resultados Para "{{q}}"</h2>
+    <div class="grid-container">
+    {% for p in resultados %}
+        <div class="card-container">
+            <div class="card-title">{{ p.nombre }}</div>
+            <div class="card-img"><img src="{{ p.imagen }}" alt="{{ p.nombre }}"></div>
+            <div class="card-desc">{{ p.descripcion }}</div>
+            <div class="card-price">${{ p.precio }}</div>
+        </div>
+      {% endfor %}
+    </div>
+{% endblock %}
