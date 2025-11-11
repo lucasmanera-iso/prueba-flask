@@ -327,7 +327,7 @@ def index():
 
 
 
-    cursor.execute("SELECT * FROM productos WHERE id_categoria = 1 LIMIT 8")
+    cursor.execute("SELECT * FROM productos WHERE id_categoria = 2 LIMIT 8")
 
     shampoo = cursor.fetchall()
 
