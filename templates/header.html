@@ -24,7 +24,14 @@
                 {% else %}
                 <div><a href="/login">Ingresar</a></div>
                 {% endif %}
-
+                <a href="/logout">Cerrar Sesion</a>
             </div>
         </div>
+            <div class="cat-container">
+                <a href="{{ url_for('renderizar_cat', id=1) }}">Shampoo</a>
+                <a href="{{ url_for('renderizar_cat', id=2) }}">Acondicionador</a>
+                <a href="{{ url_for('renderizar_cat', id=3) }}">Tratamiento</a>
+                <a href="{{ url_for('renderizar_cat', id=4) }}">Trabajos</a>
+            </div>
+
     </header>
