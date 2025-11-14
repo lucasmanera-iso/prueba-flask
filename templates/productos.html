@@ -13,7 +13,7 @@
                     <div class="card-price">${{ producto.precio }}</div>
                     <div class="card-desc">{{ producto.descripcion }}</div>
 
-                    {% if usuarios %}
+                    {% if user %}
                         <!-- Esto solo se muestra si hay usuario logueado -->
                         <div>
                             <a href="{{ url_for('editar_producto', id=producto.id_producto) }}">Editar</a> |

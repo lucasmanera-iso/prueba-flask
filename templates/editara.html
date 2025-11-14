@@ -4,16 +4,19 @@
     <h1>Editar administrador</h1>
 <form method="POST">
   <label>Nombre:</label>
-  <input type="text" name="Nombre" value="{{ usuario.nombre }}"><br>
+  <input type="text" name="Nombre" value="{{ admin.nombre }}"><br>
 
   <label>Apellido:</label>
-  <input type="text" name="Apellido" value="{{ usuario.apellido }}"><br>
+  <input type="text" name="Apellido" value="{{ admin.apellido }}"><br>
 
   <label>Teléfono:</label>
-  <input type="text" name="Telefono" value="{{ usuario.telefono }}"><br>
+  <input type="text" name="Telefono" value="{{ admin.telefono }}"><br>
 
   <label>Email:</label>
-  <input type="email" name="Email" value="{{ usuario.email }}"><br>
+  <input type="email" name="Email" value="{{ admin.email }}"><br>
+  
+  <label>Contraseña:</label>
+  <input type="password" name="Password"><br>
 
   <button type="submit">Guardar cambios</button>
 </form>

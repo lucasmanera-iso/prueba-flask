@@ -118,6 +118,11 @@ main{
     transform: translateY(-10px);
     transition: opacity .25s ease, transform .25s ease;
     z-index: 100;
+    text-align: center;
+}
+.menu-desplegable h3{
+  color: #b68f3d;
+  margin: 10px
 }
 
 .menu-desplegable a:hover {

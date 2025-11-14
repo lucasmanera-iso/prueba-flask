@@ -1,6 +1,7 @@
 from flask import Flask, render_template, request, redirect, url_for, flash, session, g
 from werkzeug.security import generate_password_hash, check_password_hash
 from pymysql.cursors import DictCursor
+from functools import wraps
 from dotenv import load_dotenv
 import os
 import re
@@ -44,18 +45,27 @@ def validar_email(email: str) -> bool:
 
 def login_required(f):
     # decorator simple para proteger rutas
-    from functools import wraps
     @wraps(f)
     def decorated(*args, **kwargs):
         if "user" not in session:
             flash("Debes iniciar sesión para ver esa página.", "warning")
-            return redirect(url_for("login"))
+            return redirect(url_for("loguear"))
         return f(*args, **kwargs)
     return decorated
 
 
+@app.before_request
+def load_user():
+    g.user = session.get("user")
+
+
+@app.context_processor
+def inject_user():
+    return {"user": session.get("user")}
+
 # Ruta principal (registro)
 @app.route("/register", methods=["GET","POST"])
+@login_required
 def register():
     if request.method == "POST":
         nombre = request.form.get("nombre", "").strip()
@@ -86,7 +96,7 @@ def register():
 
                 conn.commit()
             flash("Registro exitoso. Ya puedes iniciar sesión.", "success")
-            return redirect(url_for("logear"))
+            return redirect(url_for("loguear"))
         except pymysql.err.IntegrityError:
             flash("El email ya está en uso.", "danger")
             return redirect(url_for("register"))
@@ -137,76 +147,133 @@ def logout():
     return redirect(url_for("index"))
 
 
-@app.route("/administradores")
-def administradores():
-    if not usuarios:  # si no hay nadie logueado, redirige
-        return redirect(url_for("logear"))
 
-    conn = get_connection()
-    administradores = []
-    if conn:
-        try:
-            with conn.cursor() as cursor:
-                cursor.execute("SELECT * FROM usuario_admin")
-                administradores = cursor.fetchall()
-        except pymysql.MySQLError as err:
-            print(f"❌ Error en MySQL: {err}")
-        finally:
+@app.route("/administradores")
+@login_required
+def administradores():
+    # Asegurarse de que el user esté en session
+    user = session.get("user")
+    if not user:
+        flash("Debes iniciar sesión.", "warning")
+        return redirect(url_for("loguear"))
+
+    id_usuario = user.get("id")
+    administrador = None
+    conn = None
+    try:
+        conn = get_connection()
+        with conn.cursor() as cursor:
+            # Seleccionamos SOLO las columnas que queremos mostrar (sin psw)
+            cursor.execute(
+                "SELECT id_usuario, Nombre, Apellido, Telefono, Email, fecha_registro "
+                "FROM usuario_admin WHERE id_usuario = %s",
+                (id_usuario,)
+            )
+            administrador = cursor.fetchone()  # un solo registro
+    except pymysql.MySQLError:
+        app.logger.exception("Error al traer administrador")
+        flash("Error al cargar datos.", "danger")
+    finally:
+        if conn:
             conn.close()
 
-    return render_template("administradores.html", administradores=administradores)
+    # administradores es un dict o None
+    return render_template("administradores.html", administrador=administrador)
 
 
 @app.route("/editara/<int:id>", methods=["GET", "POST"])
+@login_required
 def editar_admin(id):
-    if not usuarios:
-        return redirect(url_for("logear"))
+
 
     conn = get_connection()
     if request.method == "POST":
-        nombre = request.form.get("Nombre")
-        apellido = request.form.get("Apellido")
-        telefono = request.form.get("Telefono")
-        email = request.form.get("Email")
+        nombre = request.form.get("Nombre","").strip()
+        apellido = request.form.get("Apellido","").strip()
+        telefono = request.form.get("Telefono","").strip()
+        email = request.form.get("Email","").strip().lower()
+        password = request.form.get("Password","")
+        
+        errores = []
+        if not nombre:
+            errores.append("El nombre es obligatorio.")
+        if not email:
+            errores.append("El email es obligatorio.")
+        elif not validar_email(email):
+            errores.append("Email no válido.")
+        if password and len(password) < 6:
+            errores.append("Si cambias la contraseña, debe tener al menos 6 caracteres.")
+
+        if errores:
+            for e in errores:
+                flash(e, "danger")
+            return redirect(url_for("editar_admin", id=id))
+
+        hashed = generate_password_hash(password) if password else None
+
 
         if conn:
             try:
+                conn = get_connection()
                 with conn.cursor() as cursor:
-                    query = """
-                        UPDATE usuario_admin
-                        SET Nombre=%s, Apellido=%s, Telefono=%s, Email=%s
-                        WHERE id_usuario=%s
-                    """
-                    cursor.execute(query, (nombre, apellido, telefono, email, id))
-                    conn.commit()
-            except pymysql.MySQLError as err:
-                print(f"❌ Error al actualizar: {err}")
-            finally:
-                conn.close()
+                    if hashed:
+                        query = """
+                            UPDATE usuario_admin
+                            SET Nombre=%s, Apellido=%s, Telefono=%s, Email=%s, psw=%s
+                            WHERE id_usuario=%s
+                        """
+                        params = (nombre, apellido, telefono, email, hashed, id)
+                    else:
+                        # No actualizar la contraseña
+                        query = """
+                            UPDATE usuario_admin
+                            SET Nombre=%s, Apellido=%s, Telefono=%s, Email=%s
+                            WHERE id_usuario=%s
+                        """
+                        params = (nombre, apellido, telefono, email, id)
 
-        return redirect(url_for("administradores"))
+                    cursor.execute(query, params)
+                    conn.commit()
+
+                flash("Datos actualizados correctamente.", "success")
+                return redirect(url_for("administradores"))
+            except pymysql.MySQLError as err:
+                app.logger.exception("Error al actualizar usuario")
+                flash("Ocurrió un error al actualizar el usuario.", "danger")
+                return redirect(url_for("administradores"))
+            finally:
+                if conn:
+                    conn.close()
+
 
     # si es GET → mostrar datos actuales
+    conn = None
     admin = None
-    if conn:
-        try:
-            with conn.cursor() as cursor:
-                cursor.execute("SELECT * FROM usuario_admin WHERE id_usuario=%s", (id,))
-                admin = cursor.fetchone()
-        except pymysql.MySQLError as err:
-            print(f"❌ Error en MySQL: {err}")
-        finally:
+    try:
+        conn = get_connection()
+        with conn.cursor() as cursor:
+            cursor.execute("SELECT * FROM usuario_admin WHERE id_usuario=%s", (id,))
+            admin = cursor.fetchone()
+    except pymysql.MySQLError:
+        app.logger.exception("Error al leer usuario")
+        flash("No se pudo cargar la información del usuario.", "danger")
+        return redirect(url_for("administradores"))
+    finally:
+        if conn:
             conn.close()
-        
-        usuario = next((u for u in usuarios if u["id_usuario"] == id), None)
 
-    return render_template("editara.html", usuario=usuario)
+    if not admin:
+        flash("Usuario no encontrado.", "warning")
+        return redirect(url_for("administradores"))
+
+    # Renderiza la plantilla con el admin (un dict)
+    return render_template("editara.html", admin=admin)
 
 
 @app.route("/editarp/<int:id>", methods=["GET", "POST"])
+@login_required
 def editar_producto(id):
-    if not usuarios:
-        return redirect(url_for("logear"))
+
 
     conn = get_connection()
     if request.method == "POST":
@@ -270,9 +337,9 @@ def editar_producto(id):
 
 
 @app.route("/eliminarp/<int:id>", methods=["POST"])
+@login_required
 def eliminar_producto(id):
-    if not usuarios:
-        return redirect(url_for("logear"))
+
     
     conn = get_connection()
     cursor = conn.cursor()
@@ -298,13 +365,14 @@ def catalogo():
             print(f"Error en MySQL: {err}")
         finally:
             conn.close()
-    return render_template("productos.html", productos=productos, usuarios=usuarios)
+    return render_template("productos.html", productos=productos)
 
 
 @app.route("/subir", methods=["GET", "POST"])
+@login_required
 def subir():
-    if usuarios:  # validación de login
         if request.method == "POST":
+            user = session.get("user")
             nombre = request.form.get("nombre")
             marca = request.form.get("marca")
             descripcion = request.form.get("descripcion")
@@ -313,7 +381,7 @@ def subir():
             stock = request.form.get("stock")
             file = request.files.get("imagen")
             id_categoria = request.form.get("categoria")
-            id_usuario = usuarios[0]["id_usuario"]
+            id_usuario = user.get("id")
 
 
             try:
@@ -344,13 +412,13 @@ def subir():
 
         return render_template("subir.html")
 
-    return redirect(url_for("logear"))
 
 
 @app.route("/")
 def index():
     conn = get_connection()
     cursor = conn.cursor()
+    print(session)
 
     # 1️⃣ Novedades: los últimos agregados
     cursor.execute("SELECT * FROM productos ORDER BY id_producto DESC LIMIT 8")

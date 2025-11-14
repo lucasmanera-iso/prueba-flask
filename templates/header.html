@@ -13,18 +13,19 @@
             <div class="menu-container">
                 <div><a href="/productos" >Productos</a></div>
                 <div><a href="https://wa.link/85v4ds" target="_blank" >Contacto</a></div>
-                {% if usuarios %}
+                {% if user %}
                 <div id="profile-logo" class="profile-logo">
                     <img src="https://imgs.search.brave.com/FOrjj-LAZECzR2vyFNpfW6DE4UrfNIdP43418R-_RiA/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9pbWFn/ZXMuc2Vla2xvZ28u/Y29tL2xvZ28tcG5n/LzI3LzIvdXNlci1s/aW5lLWxvZ28tcG5n/X3NlZWtsb2dvLTI3/MjU4MS5wbmc" alt="">
                     <div id="menu-desplegable" class="menu-desplegable">
+                        <h3>{{user.nombre}}</h3>
                         <a href="/administradores">Perfil</a>
                         <a href="/subir">Subir productos</a>
+                        <a href="/logout">Cerrar Sesion</a>
                     </div>
                 </div>
                 {% else %}
                 <div><a href="/login">Ingresar</a></div>
                 {% endif %}
-                <a href="/logout">Cerrar Sesion</a>
             </div>
         </div>
             <div class="cat-container">

@@ -4,15 +4,12 @@
 {% block content %}
       <h1>Administradores</h1>
         <div class="admins-container">
-          {% for admin in administradores %}
             <div class="admin-card">
-              <h3>{{ admin.nombre }} {{ admin.apellido }}</h3>
-              <p>Email: {{ admin.email }}</p>
-              <p>Teléfono: {{ admin.telefono }}</p>
-              <p>Contraseña: {{admin.psw}}</p>
-              <a href="{{ url_for('editar_admin', id=admin.id_usuario) }}">✏️ Editar</a>
+              <h3>{{ administrador.Nombre }} {{ administrador.Apellido }}</h3>
+              <p>Email: {{ administrador.Email }}</p>
+              <p>Teléfono: {{ administrador.Telefono }}</p>
+              <a href="{{ url_for('editar_admin', id=administrador.id_usuario) }}">✏️ Editar</a>
             </div>
-          {% endfor %}
         </div>
     
 
