@@ -339,7 +339,7 @@ color: #b68f3d;
 }
 
 .sumar{
-    background:linear-gradient(to right,#dfba6957,#2a2c3150);
+    background:linear-gradient(to right,#dfba6957,#2a2c310a);
     border-radius: 100px;
     border: none;
     cursor: pointer;
@@ -350,7 +350,7 @@ color: #b68f3d;
     justify-content: center;
 }
 .restar{
-    background:linear-gradient(to left,#dfba6957,#2a2c3150);
+    background:linear-gradient(to left,#dfba6957,#2a2c310a);
     border-radius: 100px;
     border: none;
     cursor: pointer;

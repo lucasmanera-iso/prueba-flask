@@ -65,7 +65,6 @@ def inject_user():
 
 # Ruta principal (registro)
 @app.route("/register", methods=["GET","POST"])
-@login_required
 def register():
     if request.method == "POST":
         nombre = request.form.get("nombre", "").strip()
@@ -282,6 +281,7 @@ def editar_producto(id):
         contenido = request.form.get("contenido")
         stock = request.form.get("stock")
         file = request.files.get("imagen")
+        categoria = request.form.get("categoria")
 
         imagen_url = None
         if file and file.filename != "":
@@ -296,21 +296,22 @@ def editar_producto(id):
                         # Si hay nueva imagen
                         query = """
                             UPDATE productos
-                            SET descripcion=%s, precio=%s, stock=%s, imagen=%s
+                            SET descripcion=%s, precio=%s, stock=%s, imagen=%s, id_categoria=%s
                             WHERE id_producto=%s
                         """
-                        cursor.execute(query, (descripcion, precio, stock, imagen_url, id))
+                        cursor.execute(query, (descripcion, precio, stock, imagen_url, categoria, id))
                         conn.commit()
+                        print(categoria)
 
                         return redirect("/productos")
                     else:
                         # Si no se subió imagen, no actualizar ese campo
                         query = """
                             UPDATE productos
-                            SET descripcion=%s, precio=%s, contenido=%s, stock=%s
+                            SET descripcion=%s, precio=%s, contenido=%s, stock=%s, id_categoria=%s
                             WHERE id_producto=%s
                         """
-                        cursor.execute(query, (descripcion, precio, contenido, stock, id))
+                        cursor.execute(query, (descripcion, precio, contenido, stock, categoria, id))
                         conn.commit()
 
                         return redirect("/productos")
@@ -418,19 +419,15 @@ def subir():
 def index():
     conn = get_connection()
     cursor = conn.cursor()
-    print(session)
-
     # 1️⃣ Novedades: los últimos agregados
     cursor.execute("SELECT * FROM productos ORDER BY id_producto DESC LIMIT 8")
     novedades = cursor.fetchall()
-
+    
     # 2️⃣ Más vendidos (usamos stock por ahora)
     cursor.execute("SELECT * FROM productos ORDER BY stock DESC LIMIT 8")
     mas_vendidos = cursor.fetchall()
 
     # 3️⃣ Shampo (Traemos el todos losproductos que tengan la categoria shampoo)
-
-
 
     cursor.execute("SELECT * FROM productos WHERE id_categoria = 1 LIMIT 8")
 

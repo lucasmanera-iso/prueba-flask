@@ -11,8 +11,16 @@
   <label>Contenido:</label>
   <input type="text" name="contenido" value="{{ producto.contenido }}"><br>
 
-  <label>stock:</label>
+  <label>Stock:</label>
   <input type="text" name="stock" value="{{ producto.stock }}"><br>
+
+  <label>Categoria:</label>
+              <select id="categoria" name="categoria" required>
+                <option value="1">Shampo</option>
+                <option value="2">Acondicionador</option>
+                <option value="3">Tijeras</option>
+                <option value="4">Maquinas</option>
+            </select>
 
   <label>Imagen:</label>
   <input type="file" name="imagen"><br>
